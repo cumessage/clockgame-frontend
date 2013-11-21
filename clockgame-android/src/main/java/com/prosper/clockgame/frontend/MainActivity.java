@@ -1,4 +1,4 @@
-package com.prosper.frontend.clockgame;
+package com.prosper.clockgame.frontend;
 
 import android.app.Activity;
 import android.content.Intent;
