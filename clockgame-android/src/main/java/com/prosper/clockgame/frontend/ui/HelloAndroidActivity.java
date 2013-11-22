@@ -1,4 +1,6 @@
-package com.prosper.clockgame.frontend;
+package com.prosper.clockgame.frontend.ui;
+
+import com.prosper.clockgame.frontend.R;
 
 import android.app.Activity;
 import android.os.Bundle;

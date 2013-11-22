@@ -1,4 +1,6 @@
-package com.prosper.clockgame.frontend;
+package com.prosper.clockgame.frontend.ui;
+
+import com.prosper.clockgame.frontend.R;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,7 +19,7 @@ public class DisplayMessageActivity extends Activity {
 		
 		// Get the message from the intent
 	    Intent intent = getIntent();
-	    String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+	    String message = intent.getStringExtra(HomeActivity.EXTRA_MESSAGE);
 
 	    // Create the text view
 	    TextView textView = new TextView(this);
