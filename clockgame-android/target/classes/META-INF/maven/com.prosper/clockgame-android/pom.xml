@@ -37,6 +37,11 @@
 			<artifactId>android-async-http</artifactId>
 			<version>1.4.4</version>
 		</dependency>
+		<dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.1.2</version>
+        </dependency>
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}</finalName>

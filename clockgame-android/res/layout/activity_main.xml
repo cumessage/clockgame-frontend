@@ -49,11 +49,24 @@
         
     </LinearLayout>
 
-    <Button
-        android:layout_gravity="right"
-        android:layout_width="100dp"
+    <LinearLayout
+        android:paddingBottom="20dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/button_send" 
-        android:onClick="sendMessage" />
-    
+        android:orientation="horizontal" >
+        
+	    <Button
+	        android:layout_gravity="right"
+	        android:layout_width="100dp"
+	        android:layout_height="wrap_content"
+	        android:text="@string/button_register" 
+	        android:onClick="register" />
+	    
+	    <Button
+	        android:layout_gravity="right"
+	        android:layout_width="100dp"
+	        android:layout_height="wrap_content"
+	        android:text="@string/button_login" 
+	        android:onClick="login" />
+    </LinearLayout>
 </LinearLayout>

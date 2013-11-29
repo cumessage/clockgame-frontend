@@ -1,41 +1,52 @@
 package com.prosper.clockgame.frontend.restful;
 
-import org.json.JSONArray;
+import org.apache.http.Header;
+import org.apache.http.entity.StringEntity;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+
+import com.loopj.android.http.TextHttpResponseHandler;
+import com.prosper.clockgame.frontend.common.CommonUtil;
+import com.prosper.clockgame.frontend.common.JsonParser;
 
 public class UserRestClient {
-
-	public static void getLogin() throws JSONException {
-        RestClient.get("user/login", null, new JsonHttpResponseHandler() {
+	
+	public static void login(String email, String password, final Handler handler) throws Exception {
+		String postString = JsonParser.getMapper().writeValueAsString(
+				CommonUtil.getMap("email", email, "password", password));
+		StringEntity postEntity = new StringEntity(postString);
+        RestClient.post("user/login", postEntity, new TextHttpResponseHandler() {
             @Override
-            public void onSuccess(JSONArray timeline) {
-                // Pull out the first event on the public timeline
-                JSONObject firstEvent;
-				try {
-					firstEvent = (JSONObject) timeline.get(0);
-					System.out.println(firstEvent.toString());
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+            	handler.sendMessage(CommonUtil.getMessage(statusCode, responseBody));
             }
         });
     }
 	
-	public static void getUserInfo(int id) throws JSONException {
-        RestClient.get("user/" + id +"/info", null, new JsonHttpResponseHandler() {
+	public static void register(String email, String password, final Handler handler) throws Exception {
+		String postString = JsonParser.getMapper().writeValueAsString(
+				CommonUtil.getMap("email", email, "password", password));
+		StringEntity postEntity = new StringEntity(postString);
+        RestClient.post("user", postEntity, new TextHttpResponseHandler() {
             @Override
-            public void onSuccess(JSONArray timeline) {
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+            	handler.sendMessage(CommonUtil.getMessage(statusCode, responseBody));
+            }
+        });
+    }
+	
+	public static void getUserInfo(int id, final Handler handler) throws JSONException {
+		System.out.println("start");
+        RestClient.get("user/" + id +"/info", new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 // Pull out the first event on the public timeline
-                JSONObject firstEvent;
-				try {
-					firstEvent = (JSONObject) timeline.get(0);
-					System.out.println(firstEvent.toString());
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
+            	handler.sendEmptyMessage(0);
+            	System.out.println("get");
+				System.out.println(new String(responseBody));
             }
         });
     }
