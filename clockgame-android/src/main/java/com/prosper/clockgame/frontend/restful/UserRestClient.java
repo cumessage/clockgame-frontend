@@ -4,9 +4,7 @@ import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
 import org.json.JSONException;
 
-import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.prosper.clockgame.frontend.common.CommonUtil;
@@ -47,6 +45,26 @@ public class UserRestClient {
             	handler.sendEmptyMessage(0);
             	System.out.println("get");
 				System.out.println(new String(responseBody));
+            }
+        });
+    }
+	
+	public static void getUserGameListJoined(long id, final Handler handler) throws JSONException {
+		System.out.println("start");
+        RestClient.get("user/" + id +"/game/joined", new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+            	handler.sendMessage(CommonUtil.getMessage(statusCode, responseBody));
+            }
+        });
+    }
+	
+	public static void getUserGameListJoinable(long id, final Handler handler) throws JSONException {
+		System.out.println("start");
+        RestClient.get("user/" + id +"/game/joinable", new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+            	handler.sendMessage(CommonUtil.getMessage(statusCode, responseBody));
             }
         });
     }

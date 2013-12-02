@@ -2,6 +2,8 @@
 <resources>
 
     <string name="app_name">定时灿烂</string>
+    <string name="user_name">用户</string>
+    <string name="game_list_name">游戏列表</string>
     
     <string name="input_email">邮箱:</string>
     <string name="input_password">密码:</string>
@@ -16,5 +18,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_display_message">My Message</string>
     <string name="hello_world">Hello world!</string>
+    
+    <string name="action_refresh">Refresh</string>
 
 </resources>

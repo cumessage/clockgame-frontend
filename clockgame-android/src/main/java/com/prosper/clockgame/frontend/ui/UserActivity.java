@@ -4,6 +4,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.prosper.clockgame.frontend.R;
 import com.prosper.clockgame.frontend.common.DefaultHandler;
 import com.prosper.clockgame.frontend.common.DefaultResponse;
+import com.prosper.clockgame.frontend.common.Global;
 import com.prosper.clockgame.frontend.restful.UserRestClient;
 
 import android.app.AlertDialog;
@@ -15,14 +16,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-public class HomeActivity extends SherlockActivity {
+public class UserActivity extends SherlockActivity {
 	
 	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 	
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_user);
     }
     
 
@@ -36,7 +37,7 @@ public class HomeActivity extends SherlockActivity {
     */
     
     public void login(View view) {
-    	final Intent intent = new Intent(this, DisplayMessageActivity.class);
+    	final Intent intent = new Intent(this, GameListActivity.class);
     	String email = ((EditText) findViewById(R.id.edit_email)).getText().toString();
     	String password = ((EditText) findViewById(R.id.edit_password)).getText().toString();
     	
@@ -44,16 +45,18 @@ public class HomeActivity extends SherlockActivity {
 			UserRestClient.login(email, password, new DefaultHandler() {
 				@Override
 				public void doMessage (DefaultResponse response) {
-					AlertDialog.Builder builder = new Builder(HomeActivity.this); 
+					final int userId = response.getJson().get("userId").asInt();
+					AlertDialog.Builder builder = new Builder(UserActivity.this); 
 					builder.setPositiveButton("确定", new OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
-							intent.putExtra(EXTRA_MESSAGE, "登陆成功");
+							((Global) getApplication()).setUserId(userId);;
 					    	startActivity(intent);
 						}
-					}); 
+					});
 					builder.setIcon(android.R.drawable.ic_dialog_info); 
 					if (response.getOpCode() == 0) {
-						builder.setMessage("登陆成功"); 
+						String msg = "userId: " + userId;
+						builder.setMessage("登陆成功, " + msg); 
 						builder.show();
 					} else {
 						builder.setMessage("登陆失败");
@@ -74,7 +77,7 @@ public class HomeActivity extends SherlockActivity {
 			UserRestClient.register(email, password, new DefaultHandler() {
 				@Override
 				public void doMessage (DefaultResponse response) {
-					AlertDialog.Builder builder = new Builder(HomeActivity.this); 
+					AlertDialog.Builder builder = new Builder(UserActivity.this); 
 					builder.setPositiveButton("确定",null); 
 					builder.setIcon(android.R.drawable.ic_dialog_info); 
 					if (response.getOpCode() == 0) {

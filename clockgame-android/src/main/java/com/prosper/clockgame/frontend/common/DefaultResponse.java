@@ -6,11 +6,11 @@ public class DefaultResponse {
 	
 	private int opCode;
 	
-	private JsonNode response;
+	private JsonNode json;
 	
-	public DefaultResponse(int opCode, JsonNode response) {
+	public DefaultResponse(int opCode, JsonNode json) {
 		setOpCode(opCode);
-		setResponse(response);
+		setJson(json);
 	}
 
 	public int getOpCode() {
@@ -21,12 +21,13 @@ public class DefaultResponse {
 		this.opCode = opCode;
 	}
 
-	public JsonNode getResponse() {
-		return response;
+	public JsonNode getJson() {
+		return json;
 	}
 
-	public void setResponse(JsonNode response) {
-		this.response = response;
+	public void setJson(JsonNode json) {
+		this.json = json;
 	}
+
 	
 }
