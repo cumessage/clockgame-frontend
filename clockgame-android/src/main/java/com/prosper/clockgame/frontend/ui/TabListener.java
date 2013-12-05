@@ -14,7 +14,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class MyTabListener extends FragmentStatePagerAdapter implements ActionBar.TabListener, OnPageChangeListener {
+public class TabListener extends FragmentStatePagerAdapter implements ActionBar.TabListener, OnPageChangeListener {
     private final Context _context;
     private final ActionBar _actionBar;
     private final ViewPager _viewPager;
@@ -30,7 +30,7 @@ public class MyTabListener extends FragmentStatePagerAdapter implements ActionBa
         }
     }
 
-    public MyTabListener(SherlockFragmentActivity activity, ViewPager pager) {
+    public TabListener(SherlockFragmentActivity activity, ViewPager pager) {
         super(activity.getSupportFragmentManager());
         _context = activity;
         _actionBar = activity.getSupportActionBar();

@@ -32,6 +32,22 @@
             android:name=".ui.GameListActivity"
             android:label="@string/game_list_name" >
         </activity>
+        
+        <activity
+            android:name=".ui.GameInfoActivity"
+            android:label="@string/game_info_name" >
+        </activity>
+        
+        <activity
+            android:name=".ui.GameActivity"
+            android:label="@string/game_name" >
+        </activity>
+        
+        <receiver android:name=".ui.AlarmReceiver">
+            <intent-filter>
+                <action android:name="android.alarm.demo.action" />
+            </intent-filter>
+        </receiver>
     
     </application>
 

@@ -11,7 +11,7 @@
         android:layout_margin="5px" />
 
     <LinearLayout
-        android:layout_width="wrap_content" 
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
@@ -31,5 +31,19 @@
             android:textColor="#999999"
             android:textSize="30px" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button_enter_game"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="@string/button_enter_game" />
+    
+    <Button
+        android:id="@+id/button_game_info"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="@string/button_game_info" />
 
 </LinearLayout>

@@ -19,10 +19,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.prosper.clockgame.frontend.R;
 import com.prosper.clockgame.frontend.common.DefaultHandler;
 import com.prosper.clockgame.frontend.common.DefaultResponse;
+import com.prosper.clockgame.frontend.common.Global;
 import com.prosper.clockgame.frontend.restful.UserRestClient;
 
-public class SecondFragment extends SherlockListFragment {
-    private View _fragmentView;
+public class JoinableGameListFragment extends SherlockListFragment {
+    private View fragmentView;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -37,9 +38,11 @@ public class SecondFragment extends SherlockListFragment {
 
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		_fragmentView = inflater.inflate(R.layout.first_tab_layout, container, false);
+    	Global global = (Global) getActivity().getApplication();
+		long userId = global.getUserId();
+		fragmentView = inflater.inflate(R.layout.blank_layout, container, false);
 		try {
-			UserRestClient.getUserGameListJoinable(4, new DefaultHandler() {
+			UserRestClient.getUserGameListJoinable(userId, new DefaultHandler() {
 				@Override
 				public void doMessage (DefaultResponse response) {
 					updateUI(response);
@@ -48,18 +51,19 @@ public class SecondFragment extends SherlockListFragment {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		if (_fragmentView == null) {
+		if (fragmentView == null) {
 			return null;
 		}
-		return _fragmentView;
+		return fragmentView;
 	}
 
 	private void updateUI(DefaultResponse response) {
-		SimpleAdapter adapter = new SimpleAdapter(
-				getActivity(), getData(response), R.layout.vlist,
-				new String[]{"title","info","img"},
-				new int[]{R.id.title, R.id.info, R.id.img}
-				);
+//		SimpleAdapter adapter = new SimpleAdapter(
+//				getActivity(), getData(response), R.layout.vlist,
+//				new String[]{"title","info","img"},
+//				new int[]{R.id.title, R.id.info, R.id.img}
+//				);
+		GameListAdapter adapter = new GameListAdapter(getActivity(), getData(response), 1);
 		setListAdapter(adapter);
 	}
 	
@@ -73,6 +77,8 @@ public class SecondFragment extends SherlockListFragment {
 			String time = sdf.format(game.get("playTime").asLong());
 			
 			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("id", game.get("id").asLong());
+			map.put("playTime", game.get("playTime").asLong());
 			map.put("title", time);
 			map.put("info", "创建者: " + game.get("creatorName").asText());
 			map.put("img", R.drawable.ic_launcher);
