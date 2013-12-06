@@ -48,6 +48,8 @@
                 <action android:name="android.alarm.demo.action" />
             </intent-filter>
         </receiver>
+        
+        <service android:name=".ui.SensorService" />
     
     </application>
 
