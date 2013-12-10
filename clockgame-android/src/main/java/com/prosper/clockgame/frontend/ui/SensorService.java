@@ -11,7 +11,7 @@ public class SensorService extends Service {
 
 	private static final String LOG_TAG = "SensorService";
 
-	private FootFallDetector footFallDetector;
+	private RunDetector footFallDetector;
 	private Handler clientHandler;
 	private final IBinder mBinder = new LocalBinder();
 
@@ -37,7 +37,7 @@ public class SensorService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		Log.v(LOG_TAG, "onCreate");
-		footFallDetector = new FootFallDetector(this);
+		footFallDetector = new RunDetector(this);
 	}
 
 	@Override
