@@ -1,5 +1,7 @@
 package com.prosper.clockgame.frontend.ui;
 
+import com.prosper.clockgame.frontend.util.RunDataReciever;
+
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
@@ -11,20 +13,23 @@ public class SensorService extends Service {
 
 	private static final String LOG_TAG = "SensorService";
 
-	private RunDetector footFallDetector;
+	private RunDetector runDetector;
+	private RunDataReciever runDataReciever;
 	private Handler clientHandler;
 	private final IBinder mBinder = new LocalBinder();
 
 	public class LocalBinder extends Binder {
 		public void gimmeHandler(Handler handler) {
+			Log.d(LOG_TAG, "client handler bind");
 			clientHandler = handler;
+			RunDataReciever.getInstance().setHandler(clientHandler);
 		}
 	}
-
+	
 	@Override
 	public IBinder onBind(Intent intent) {
 		Log.v(LOG_TAG, "bind");
-		return null;
+		return mBinder;
 	}
 
 	@Override
@@ -37,7 +42,8 @@ public class SensorService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		Log.v(LOG_TAG, "onCreate");
-		footFallDetector = new RunDetector(this);
+		runDetector = new RunDetector(this);
+		RunDataReciever.init();
 	}
 
 	@Override
@@ -49,14 +55,14 @@ public class SensorService extends Service {
 	}
 
 	private void start() {
-		footFallDetector.start();
+		runDetector.start();
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
 		Log.v(LOG_TAG, "onDestroy");
-		footFallDetector.stop();
+		runDetector.stop();
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.prosper.clockgame.frontend.common;
+package com.prosper.clockgame.frontend.util;
 
 import java.util.HashMap;
 import java.util.Map;

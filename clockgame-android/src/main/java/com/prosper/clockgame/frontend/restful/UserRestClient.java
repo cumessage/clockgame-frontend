@@ -7,8 +7,8 @@ import org.json.JSONException;
 import android.os.Handler;
 
 import com.loopj.android.http.TextHttpResponseHandler;
-import com.prosper.clockgame.frontend.common.CommonUtil;
-import com.prosper.clockgame.frontend.common.JsonParser;
+import com.prosper.clockgame.frontend.util.CommonUtil;
+import com.prosper.clockgame.frontend.util.JsonParser;
 
 public class UserRestClient {
 	

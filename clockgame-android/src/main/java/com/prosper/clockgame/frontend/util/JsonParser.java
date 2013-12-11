@@ -1,4 +1,4 @@
-package com.prosper.clockgame.frontend.common;
+package com.prosper.clockgame.frontend.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

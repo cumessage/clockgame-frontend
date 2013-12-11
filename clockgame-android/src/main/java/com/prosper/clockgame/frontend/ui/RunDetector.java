@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 
-import com.prosper.clockgame.frontend.common.RunDataReciever;
+import com.prosper.clockgame.frontend.util.RunDataReciever;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -19,44 +19,8 @@ import android.util.Log;
 public class RunDetector implements SensorEventListener {
 
 	private static final String LOG_TAG = "RunDetector";
-	
-	private static final int BUFFER_TIME = 1000000000;
-	private static final int BUFFER_SIZE = 1000;
 
 	private boolean active = false;
-	private Buffer buffer;
-	
-	
-	private static class Buffer {
-		private float[] dataBuffer;
-		private int size;
-		private int maxSize;
-		private long[] timeBuffer;
-
-		Buffer(int maxSize) {
-			this.maxSize = maxSize;
-			reset();
-		}
-		
-		void reset() {
-			dataBuffer = new float[maxSize];
-			timeBuffer = new long[maxSize / 2];
-			this.size = 0;
-		}
-		
-		boolean isWriteable() {
-			return size < maxSize;
-		}
-		
-		void put(float x, float y, long time) {
-			dataBuffer[size] = x;
-			dataBuffer[size + 1] = y;
-			timeBuffer[size / 2] = time;
-			size = size + 2;
-		}
-	}
-	
-	private long lastUpdate = -1;
 
 	private final Context context;
 	private SensorManager sensorManager;
@@ -66,7 +30,6 @@ public class RunDetector implements SensorEventListener {
 	}
 
 	public void start() {
-		buffer = new Buffer(BUFFER_SIZE);
 		sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
 		Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_FASTEST);
@@ -79,22 +42,13 @@ public class RunDetector implements SensorEventListener {
 	}
 
 	public void onSensorChanged(SensorEvent event) {
-		if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER) {
-			return;
-		}
-		
-		if (lastUpdate == -1 || (event.timestamp - lastUpdate) < BUFFER_TIME) {
-			if (buffer.isWriteable()) {
-				buffer.put(event.values[0], event.values[1], event.timestamp);
-				return;
-			}
-		}
-		
-		RunDataReciever.put(buffer.dataBuffer, buffer.timeBuffer, buffer.size);
-		lastUpdate = event.timestamp;
-		
-		buffer.reset();
-		buffer.put(event.values[0], event.values[1], event.timestamp);
+//		printToScream(event);
+//		logToFile(event);
+		writeToBuffer(event);
+	}
+	
+	public void writeToBuffer(SensorEvent event) {
+		RunDataReciever.getInstance().put(event.values[0], event.values[1], event.timestamp);
 	}
 	
 	public void logToFile(SensorEvent event) {
@@ -133,6 +87,10 @@ public class RunDetector implements SensorEventListener {
 		} else {
 			throw new RuntimeException("sd is not mounted");
 		}
+	}
+	
+	public void printToScream(SensorEvent event) {
+		Log.d(LOG_TAG, Integer.toString(event.sensor.getType()) + " : " + Arrays.toString(event.values));
 	}
 	
 	private float getSum(float x, float y, float z) {

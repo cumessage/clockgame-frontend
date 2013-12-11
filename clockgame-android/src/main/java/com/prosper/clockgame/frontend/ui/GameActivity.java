@@ -14,35 +14,30 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.util.Log;
 import android.widget.TextView;
 
 public class GameActivity extends SherlockActivity {
-
-	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 	
+	private static final String LOG_TAG = "GameActivity";
+
 	private Intent serviceIntent;
 
 	private final ServiceConnection serviceConnection = new ServiceConnection() {
-
-		public void onServiceConnected(ComponentName name, IBinder binder) {
-			((SensorService.LocalBinder) binder).gimmeHandler(updateCadenceDisplayHandler);
+		public void onServiceConnected(ComponentName name, IBinder service) {
+			Log.d(LOG_TAG, "on service connected");
+			((SensorService.LocalBinder) service).gimmeHandler(updateCadenceDisplayHandler);
 		}
-
 		public void onServiceDisconnected(ComponentName name) {
-			// TODO Auto-generated method stub
-
 		}
 	};
 
 	private final Handler updateCadenceDisplayHandler = new Handler() {
 		@Override
 		public void handleMessage(Message message) {
-			int cadence = message.arg1;
-//			if (cadence > 0) {
-//				mCurrentCadence.setText(String.valueOf(cadence));
-//			} else {
-//				mCurrentCadence.setText(DISPLAY_NO_DATA);
-//			}
+			int counter = message.arg1;
+			TextView gameIdView = (TextView) findViewById(R.id.game_run);
+			gameIdView.setText(Integer.toString(counter));
 		}
 	};
 
@@ -66,6 +61,7 @@ public class GameActivity extends SherlockActivity {
 		
 		serviceIntent = new Intent(GameActivity.this, SensorService.class);
         startService(serviceIntent);
+        Log.d(LOG_TAG, "on create");
 	}
 
 	private void updateUI(DefaultResponse response) {
@@ -78,12 +74,14 @@ public class GameActivity extends SherlockActivity {
     protected void onStop() {
             super.onStop();
             unbindService(serviceConnection);
+            Log.d(LOG_TAG, "on stop");
     }
 
     @Override
     protected void onStart() {
             super.onStart();
             bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
+            Log.d(LOG_TAG, "on start");
     }
 
 
