@@ -8,11 +8,18 @@ function __G__TRACKBACK__(msg)
     print("----------------------------------------")
 end
 
+function cclog(...)
+    print(string.format(...))
+end
+
 local function createLogin(visibleSize, origin)
-    local textField = CCTextFieldTTF:textFieldWithPlaceHolder(
-        "input text", "Arial", 24)
-    textField.setPosition(ccp(origin.x, origin.y + visibleSize.height / 4 * 3))
-    return textField
+    local inputField = CCTextFieldTTF:textFieldWithPlaceHolder(
+        "input text", "Arial", 50)
+    inputField:setColor(ccc3(255,255,255));
+    inputField:setPosition(
+        origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2)
+    inputField:attachWithIME();
+    return inputField
 end
 
 local function creatDog(visibleSize, origin)
