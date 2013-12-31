@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="booting">正在初始化...</string>
     <string name="app_name">定时灿烂</string>
     <string name="user_name">用户</string>
     <string name="game_list_name">游戏列表</string>

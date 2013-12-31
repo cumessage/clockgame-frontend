@@ -16,7 +16,7 @@ import android.widget.SimpleAdapter;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.prosper.clockgame.frontend.R;
+import com.prosper.clockgame.frontend.R; 
 import com.prosper.clockgame.frontend.common.DefaultHandler;
 import com.prosper.clockgame.frontend.common.DefaultResponse;
 import com.prosper.clockgame.frontend.common.Global;

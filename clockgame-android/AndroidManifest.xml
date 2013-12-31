@@ -20,14 +20,19 @@
         android:theme="@style/AppTheme">
         
         <activity 
-            android:name=".ui.UserActivity"
+            android:name=".ui.BootActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:hardwareAccelerated="true"
-            android:label="@string/user_name" >
+            android:label="@string/booting" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".ui.UserActivity"
+            android:label="@string/user_name" >
         </activity>
         
         <activity

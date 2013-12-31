@@ -2,7 +2,6 @@ package com.prosper.clockgame.frontend.restful;
 
 import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
-import org.json.JSONException;
 
 import android.os.Handler;
 
@@ -14,6 +13,24 @@ public class GameRestClient {
 	
 	public static void getInfo(long id, final Handler handler) throws Exception {
 		RestClient.get("game/" + id +"/info", new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+            	handler.sendMessage(CommonUtil.getMessage(statusCode, responseBody));
+            }
+        });
+    }
+	
+	public static void getGameDataByGameIdAndUserId(long gameId, long userId, final Handler handler) throws Exception {
+		RestClient.get("game/" + gameId + "/data/" + userId , new TextHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+            	handler.sendMessage(CommonUtil.getMessage(statusCode, responseBody));
+            }
+        });
+    }
+	
+	public static void getGameDataByGameIdAndWithOutUserId(long gameId, long userId, final Handler handler) throws Exception {
+		RestClient.get("game/" + gameId + "/data/without-" + userId , new TextHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
             	handler.sendMessage(CommonUtil.getMessage(statusCode, responseBody));

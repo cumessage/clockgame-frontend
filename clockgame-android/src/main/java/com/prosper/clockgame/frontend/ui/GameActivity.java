@@ -18,7 +18,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 public class GameActivity extends SherlockActivity {
-	
+
 	private static final String LOG_TAG = "GameActivity";
 
 	private Intent serviceIntent;
@@ -58,10 +58,10 @@ public class GameActivity extends SherlockActivity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		serviceIntent = new Intent(GameActivity.this, SensorService.class);
-        startService(serviceIntent);
-        Log.d(LOG_TAG, "on create");
+		startService(serviceIntent);
+		Log.d(LOG_TAG, "on create");	
 	}
 
 	private void updateUI(DefaultResponse response) {
@@ -69,20 +69,20 @@ public class GameActivity extends SherlockActivity {
 		gameIdView.setText(response.getJson().get("id").asText());
 		System.out.println("get result:" + response.getJson().toString());
 	}
-	
-	@Override
-    protected void onStop() {
-            super.onStop();
-            unbindService(serviceConnection);
-            Log.d(LOG_TAG, "on stop");
-    }
 
-    @Override
-    protected void onStart() {
-            super.onStart();
-            bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
-            Log.d(LOG_TAG, "on start");
-    }
+	@Override
+	protected void onStop() {
+		super.onStop();
+		unbindService(serviceConnection);
+		Log.d(LOG_TAG, "on stop");
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
+		Log.d(LOG_TAG, "on start");
+	}
 
 
 }
